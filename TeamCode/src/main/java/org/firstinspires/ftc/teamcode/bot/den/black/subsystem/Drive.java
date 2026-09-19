@@ -19,12 +19,19 @@ public class Drive implements BaseSubsystem {
     public void init(HardwareMap hardwareMap){
         leftDrive = hardwareMap.get(DcMotor.class, org.firstinspires.ftc.teamcode.bot.den.black.Constants.Robot.ConfigNames.leftDrive);
         rightDrive = hardwareMap.get(DcMotor.class, org.firstinspires.ftc.teamcode.bot.den.black.Constants.Robot.ConfigNames.rightDrive);
+
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
     }
 
     public void showTelemetry(){
+        telemetry.addData("Left Motor Power: ", leftDrive.getPower());
+        telemetry.addData("Right Motor Power: ", rightDrive.getPower());
     }
 
-    public void arcadeDrive(double forward, double rotate) {
+    public void drive(double forward, double rotate) {
+        leftDrive.setPower(forward+rotate);
+        rightDrive.setPower(forward-rotate);
     }
 
     private boolean autoDriveDistance(double distance){

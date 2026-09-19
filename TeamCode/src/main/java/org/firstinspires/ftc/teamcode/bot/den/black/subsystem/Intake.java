@@ -23,11 +23,25 @@ public class Intake implements BaseSubsystem {
     }
 
     public void showTelemetry(){
+        telemetry.addData("Intake Speed: ", intakeMotor.getPower());
     }
 
-    public void setIntakePower()  {
-
+    private void setIntakePower(double speed)  {
+        intakeMotor.setPower(speed);
+        leftIntakeServo.setPower(speed);
+        rightIntakeServo.setPower(speed);
     }
 
+    public void spinIntakeForward(){
+        setIntakePower(1);
+    }
+
+    public void spinIntakeBackwards(){
+        setIntakePower(-1);
+    }
+
+    public void stopIntake(){
+        setIntakePower(0);
+    }
 
 }
