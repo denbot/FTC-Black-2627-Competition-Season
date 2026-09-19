@@ -25,6 +25,9 @@ public class Intake implements BaseSubsystem {
     public void showTelemetry(){
     }
 
-    public void setIntakePower(){
+    public void setIntakePower()  {
+
     }
+
+
 }
