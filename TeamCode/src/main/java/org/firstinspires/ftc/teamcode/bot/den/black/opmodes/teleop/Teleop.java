@@ -15,38 +15,46 @@ public class Teleop extends OpMode {
     @Override
     public void init() {
         telemetry.addData("Status", "Teleop Initialized");
+        intake.init(hardwareMap);
+        shooter.init(hardwareMap);
+        drive.init(hardwareMap);
     }
 
     @Override
     public void loop() {
-
         if(gamepad2.a){
+            // intakes balls to prepare to shoot
             intake.spinIntakeForward();
-            shooter.spinFeederForward();
-            shooter.spinReverse();
         } else if(gamepad2.cross) {
+            // unloads stored balls in case of a jam
             intake.spinIntakeBackwards();
         } else {
             intake.stopIntake();
         }
 
         if(gamepad2.circle){
+            // prepare to shoot balls at hive
             shooter.spinHive();
         } else if(gamepad2.triangle) {
+            // prepare to shoot balls at flower
             shooter.spinFlower();
+        } else if(gamepad2.a){
+            shooter.spinReverse();
         } else {
             shooter.stopSpinner();
         }
 
-        if(gamepad2.right_trigger_pressed){
+        if(gamepad2.right_trigger_pressed || gamepad2.a){
+            // shoot balls at target
             shooter.spinFeederForward();
         } else if(gamepad2.cross) {
+            // try to clear shooting jam
             shooter.spinFeederReverse();
         } else {
             shooter.stopFeeder();
         }
 
-        drive.drive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+        drive.drive(gamepad1.left_stick_y * 0.5, gamepad1.right_stick_x * 0.5);
 
         intake.showTelemetry();
         shooter.showTelemetry();

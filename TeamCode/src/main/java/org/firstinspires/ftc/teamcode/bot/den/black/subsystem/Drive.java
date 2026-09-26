@@ -27,6 +27,8 @@ public class Drive implements BaseSubsystem {
     public void showTelemetry(){
         telemetry.addData("Left Motor Power: ", leftDrive.getPower());
         telemetry.addData("Right Motor Power: ", rightDrive.getPower());
+        telemetry.addData("Left Motor Position: ", leftDrive.getCurrentPosition());
+        telemetry.addData("Right Motor Position: ", rightDrive.getCurrentPosition());
     }
 
     public void drive(double forward, double rotate) {
@@ -34,7 +36,7 @@ public class Drive implements BaseSubsystem {
         rightDrive.setPower(forward-rotate);
     }
 
-    private boolean autoDriveDistance(double distance){
+    private boolean autoDriveDistance(double distance) {
         return true;
     }
 

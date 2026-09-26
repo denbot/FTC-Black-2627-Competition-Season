@@ -60,11 +60,11 @@ public class Shooter implements BaseSubsystem {
     }
 
     public void spinFeederForward(){
-        setFeederPower(1);
+        setFeederPower(-0.4);
     }
 
     public void spinFeederReverse(){
-        setFeederPower(-1);
+        setFeederPower(0.4);
     }
 
     public void stopFeeder(){

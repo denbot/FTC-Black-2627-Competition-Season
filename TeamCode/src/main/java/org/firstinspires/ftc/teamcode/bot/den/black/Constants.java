@@ -17,7 +17,7 @@ public class Constants {
         public static class ConfigNames {
             public static final String rightDrive = "right_drive";
             public static final String leftDrive = "left_drive";
-            public static final String feederServo = "right_feeder";
+            public static final String feederServo = "feeder";
             public static final String rightIntakeServo = "right_intake";
             public static final String leftIntakeServo = "left_intake";
             public static final String intake = "intake";

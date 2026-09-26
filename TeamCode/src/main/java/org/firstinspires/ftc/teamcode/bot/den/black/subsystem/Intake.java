@@ -28,8 +28,8 @@ public class Intake implements BaseSubsystem {
 
     private void setIntakePower(double speed)  {
         intakeMotor.setPower(speed);
-        leftIntakeServo.setPower(speed);
-        rightIntakeServo.setPower(speed);
+        leftIntakeServo.setPower(speed*0.4);
+        rightIntakeServo.setPower(-speed*0.4);
     }
 
     public void spinIntakeForward(){
