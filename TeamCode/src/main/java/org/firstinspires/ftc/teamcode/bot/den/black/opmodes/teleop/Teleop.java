@@ -34,22 +34,22 @@ public class Teleop extends OpMode {
 
         if(gamepad2.circle){
             // prepare to shoot balls at hive
-            shooter.spinHive();
+            shooter.spinShooterHive();
         } else if(gamepad2.triangle) {
             // prepare to shoot balls at flower
-            shooter.spinFlower();
+            shooter.spinShooterFlower();
         } else if(gamepad2.a){
-            shooter.spinReverse();
+            shooter.spinShooterReverse();
         } else {
-            shooter.stopSpinner();
+            shooter.stopShooter();
         }
 
-        if(gamepad2.right_trigger_pressed || gamepad2.a){
+        if(gamepad2.right_trigger_pressed){
             // shoot balls at target
-            shooter.spinFeederForward();
-        } else if(gamepad2.cross) {
-            // try to clear shooting jam
-            shooter.spinFeederReverse();
+            if(shooter.shooterState == Shooter.ShooterState.AT_SPEED){
+                shooter.spinFeederForward();
+                intake.spinIntakeForward();
+            }
         } else {
             shooter.stopFeeder();
         }

@@ -22,6 +22,9 @@ public class Drive implements BaseSubsystem {
 
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
+
+        leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void showTelemetry(){
@@ -32,8 +35,8 @@ public class Drive implements BaseSubsystem {
     }
 
     public void drive(double forward, double rotate) {
-        leftDrive.setPower(forward+rotate);
-        rightDrive.setPower(forward-rotate);
+        leftDrive.setPower(forward-rotate);
+        rightDrive.setPower(forward+rotate);
     }
 
     private boolean autoDriveDistance(double distance) {

@@ -11,6 +11,8 @@ public class Constants {
     }
 
     public static class Shooter {
+        public static final double hiveSpeed = 1400 ;
+        public static final double flowerSpeed = 1000;
     }
 
     public static class Robot {
@@ -27,6 +29,8 @@ public class Constants {
         private static final double wheelDiameterMM = 96;
         private static final double encoderTicksPerRev = 537.7;
         public static final double ticksPerMM = encoderTicksPerRev / (wheelDiameterMM * Math.PI);
-        public static final double trackWidthMM = 404;
+        public static final double trackWidthMM = 402;
+        public static final double driveSpeed = 0.5;
+        public static final double rotateSpeed = 0.2;
     }
 }
