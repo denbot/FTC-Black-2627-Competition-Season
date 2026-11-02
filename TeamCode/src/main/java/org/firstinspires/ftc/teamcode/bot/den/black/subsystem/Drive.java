@@ -35,9 +35,14 @@ public class Drive implements BaseSubsystem {
         telemetry.addData("Right Motor Position: ", rightDrive.getCurrentPosition());
     }
 
-    public void drive(double forward, double rotate) {
-        leftDrive.setPower(forward-rotate);
-        rightDrive.setPower(forward+rotate);
+    public void drive(double forward, double rotate, boolean buttonPressed) {
+        if(buttonPressed){
+            leftDrive.setPower(forward-rotate);
+            rightDrive.setPower(forward+rotate);
+        } else {
+            leftDrive.setPower(0.8*forward-0.8*rotate);
+            rightDrive.setPower(0.8*forward+0.8*rotate);
+        }
     }
 
     public boolean autoDrive(double distance, double speed) {
@@ -74,17 +79,15 @@ public class Drive implements BaseSubsystem {
          * To find the number of mm that our wheels need to travel, we just need to multiply the
          * requested angle in radians by the radius of our turning circle, or half the width of the robot.
          */
-        double targetMm = AngleUnit.DEGREES.toRadians(angle)*(Constants.Robot.trackWidthMM/2);
-
+        double targetMm =   AngleUnit.DEGREES.toRadians(angle) *
+                            (Constants.Robot.trackWidthMM/2) *
+                            Constants.Robot.ticksPerMM;
         /*
          * We need to set the left motor to the inverse of the target so that we rotate instead
          * of driving straight.
          */
-        double leftTargetPosition = -(targetMm*Constants.Robot.trackWidthMM);
-        double rightTargetPosition = targetMm*Constants.Robot.trackWidthMM;
-
-        leftDrive.setTargetPosition((int) leftTargetPosition);
-        rightDrive.setTargetPosition((int) rightTargetPosition);
+        leftDrive.setTargetPosition((int) targetMm);
+        rightDrive.setTargetPosition((int) -targetMm);
 
         leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -93,8 +96,8 @@ public class Drive implements BaseSubsystem {
         rightDrive.setPower(speed);
 
         //Same rule as linear driving, return true when we are within our tolerance, otherwise return false.
-        return (Math.abs(leftTargetPosition - leftDrive.getCurrentPosition())) <
-                (10 * Constants.Robot.trackWidthMM);
+        return Math.abs(targetMm - leftDrive.getCurrentPosition()) <
+                (10 * Constants.Robot.ticksPerMM);
     }
 
     public void resetEncoders(){

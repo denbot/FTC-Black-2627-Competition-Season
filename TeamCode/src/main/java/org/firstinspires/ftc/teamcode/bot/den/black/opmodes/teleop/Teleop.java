@@ -24,8 +24,8 @@ public class Teleop extends OpMode {
     public void loop() {
         if(gamepad2.a){
             // intakes balls to prepare to shoot
-            intake.spinIntakeForward();
-        } else if(gamepad2.cross) {
+            intake.spinIntakeForward()  ;
+        } else if(gamepad2.triangle) {
             // unloads stored balls in case of a jam
             intake.spinIntakeBackwards();
         } else {
@@ -35,9 +35,6 @@ public class Teleop extends OpMode {
         if(gamepad2.circle){
             // prepare to shoot balls at hive
             shooter.spinShooterHive();
-        } else if(gamepad2.triangle) {
-            // prepare to shoot balls at flower
-            shooter.spinShooterFlower();
         } else if(gamepad2.a){
             shooter.spinShooterReverse();
         } else {
@@ -50,11 +47,14 @@ public class Teleop extends OpMode {
                 shooter.spinFeederForward();
                 intake.spinIntakeForward();
             }
-        } else {
+        } else if(gamepad2.triangle){
+            shooter.spinFeederReverse();
+            shooter.spinShooterReverse();
+        }else {
             shooter.stopFeeder();
         }
 
-        drive.drive(gamepad1.left_stick_y * 0.5, gamepad1.right_stick_x * 0.5);
+        drive.drive(gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.right_trigger_pressed);
 
         intake.showTelemetry();
         shooter.showTelemetry();
