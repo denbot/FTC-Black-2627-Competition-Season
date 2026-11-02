@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Shooter;
 
-@Autonomous(name = "Auto1", group="Denbot", preselectTeleOp = "Teleop")
+@Autonomous(name = "ExampleAuto", group="Denbot", preselectTeleOp = "Teleop")
 public class ExampleAuto extends OpMode {
     //The ordered sequence of actions - This is what the robot will try to do
     private final AutoStates[] autoRoutine = {
@@ -17,7 +17,10 @@ public class ExampleAuto extends OpMode {
             AutoStates.RESET,
             AutoStates.SHOOT,
             AutoStates.DRIVE,
+            AutoStates.HOLD,
+            AutoStates.RESET,
             AutoStates.ROTATE,
+            AutoStates.HOLD,
             AutoStates.END
     };
     //This variable will step through the array above so we complete the steps in order
@@ -73,6 +76,13 @@ public class ExampleAuto extends OpMode {
                     step++;
                 }
                 break;
+            case HOLD:
+                //Wait a small time to stop moving, then move on
+                if(waitTimer.seconds() > 0.5){
+                    drive.drive(0,0, false);
+                    step++;
+                }
+                break;
             case SHOOT:
                 //Perform the shooting sequence for the specified amount of time, then move on
                 shooter.spinShooterHive();
@@ -85,6 +95,9 @@ public class ExampleAuto extends OpMode {
                 }
                 if(waitTimer.seconds() > 10) {
                     step++;
+                    intake.stopIntake();
+                    shooter.stopFeeder();
+                    shooter.stopShooter();
                 }
                 break;
             case DRIVE:
@@ -104,7 +117,7 @@ public class ExampleAuto extends OpMode {
                 intake.stopIntake();
                 shooter.stopShooter();
                 shooter.stopFeeder();
-                drive.drive(0,0);
+                drive.drive(0,0, false);
                 break;
         }
     }
