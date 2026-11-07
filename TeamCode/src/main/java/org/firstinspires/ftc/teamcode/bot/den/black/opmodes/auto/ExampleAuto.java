@@ -16,10 +16,10 @@ public class ExampleAuto extends OpMode {
             AutoStates.WAIT,
             AutoStates.RESET,
             AutoStates.SHOOT,
-            AutoStates.DRIVE,
+            AutoStates.DRIVE_ONE_FOOT,
             AutoStates.HOLD,
             AutoStates.RESET,
-            AutoStates.ROTATE,
+            AutoStates.ROTATE_180,
             AutoStates.HOLD,
             AutoStates.END
     };
@@ -100,13 +100,13 @@ public class ExampleAuto extends OpMode {
                     shooter.stopShooter();
                 }
                 break;
-            case DRIVE:
+            case DRIVE_ONE_FOOT:
                 //Drive forward 12 inches, then move on
                 if(drive.autoDrive(12,0.5)){
                     step++;
                 }
                 break;
-            case ROTATE:
+            case ROTATE_180:
                 //Rotate 180 degrees, then move on
                 if(drive.autoRotate(180,0.2)){
                     step++;

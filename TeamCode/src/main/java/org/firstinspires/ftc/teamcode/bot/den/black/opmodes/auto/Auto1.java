@@ -13,6 +13,39 @@ import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Shooter;
 public class Auto1 extends OpMode {
     //The ordered sequence of actions - This is what the robot will try to do
     private final AutoStates[] autoRoutine = {
+            AutoStates.WAIT,
+            AutoStates.RESET,
+            AutoStates.SHOOT,
+            AutoStates.DRIVE_TEN_FEET,
+            AutoStates.HOLD,
+            AutoStates.RESET,
+            AutoStates.ROTATE_180,
+            AutoStates.INTAKE_DOWN,
+            AutoStates.HOLD,
+            AutoStates.RESET,
+            AutoStates.DRIVE_ONE_FOOT,
+            AutoStates.HOLD,
+            AutoStates.RESET,
+            AutoStates.DRIVE_NEGATIVE_ONE_FOOT,
+            AutoStates.HOLD,
+            AutoStates.RESET,
+            AutoStates.ROTATE_90,
+            AutoStates.HOLD,
+            AutoStates.RESET,
+            AutoStates.INTAKE_UP,
+            AutoStates.DRIVE_ONE_FOOT,
+            AutoStates.HOLD,
+            AutoStates.RESET,
+            AutoStates.ROTATE_NEGATIVE_90,
+            AutoStates.HOLD,
+            AutoStates.RESET,
+            AutoStates.SHOOT,
+            AutoStates.ROTATE_NEGATIVE_100,
+            AutoStates.HOLD,
+            AutoStates.RESET,
+            AutoStates.DRIVE_FOUR_FEET,
+            AutoStates.END
+
     };
     //This variable will step through the array above so we complete the steps in order
     private int step = 0;
@@ -54,6 +87,107 @@ public class Auto1 extends OpMode {
          * by the counter and runs the applicable instructions based on the state
          */
         switch(autoRoutine[step]){
+            case RESET:
+                //Reset the wait timer and drive encoders, then move on
+                drive.resetEncoders();
+                waitTimer.reset();
+                step++;
+                break;
+            case WAIT:
+                //Wait the specified amount of time in our waitTime variable, then move on
+                if(waitTimer.seconds() > waitTime){
+                    step++;
+                }
+                break;
+            case HOLD:
+                //Wait a small time to stop moving, then move on
+                if(waitTimer.seconds() > 0.5){
+                    drive.drive(0,0, false);
+                    step++;
+                }
+                break;
+            case SHOOT:
+                //Perform the shooting sequence for the specified amount of time, then move on
+                shooter.spinShooterHive();
+                if(shooter.shooterState == Shooter.ShooterState.AT_SPEED){
+                    intake.spinIntakeForward();
+                    shooter.spinFeederForward();
+                } else{
+                    intake.stopIntake();
+                    shooter.stopFeeder();
+                }
+                if(waitTimer.seconds() > 10) {
+                    step++;
+                    intake.stopIntake();
+                    shooter.stopFeeder();
+                    shooter.stopShooter();
+                }
+                break;
+            case DRIVE_ONE_FOOT:
+                //Drive forward 12 inches, then move on
+                if(drive.autoDrive(12,0.5)){
+                    step++;
+                }
+                break;
+            case DRIVE_FOUR_FEET:
+                //Drive forward 48 inches, then move on
+                if(drive.autoDrive(48,0.5)){
+                    step++;
+                }
+                break;
+            case DRIVE_TEN_FEET:
+                //Drive forward 120 inches, then move on
+                if(drive.autoDrive(120,0.5)){
+                    step++;
+                }
+                break;
+            case DRIVE_NEGATIVE_ONE_FOOT:
+                //Drive forward -12 inches, then move on
+                if(drive.autoDrive(-12,0.5)){
+                    step++;
+                }
+                break;
+            case ROTATE_180:
+                //Rotate 180 degrees, then move on
+                if(drive.autoRotate(180,0.2)){
+                    step++;
+                }
+                break;
+            case ROTATE_NEGATIVE_100:
+                //Rotate 180 degrees, then move on
+                if(drive.autoRotate(-100,0.2)){
+                    step++;
+                }
+                break;
+            case ROTATE_NEGATIVE_90:
+                //Rotate 180 degrees, then move on
+                if(drive.autoRotate(-90,0.2)){
+                    step++;
+                }
+                break;
+            case ROTATE_90:
+                //Rotate 90 degrees, then move on
+                if(drive.autoRotate(90,0.2)){
+                    step++;
+                }
+                break;
+            case INTAKE_DOWN:
+                //Rotate 90 degrees, then move on
+                intake.setFlowerRampDown();
+                step++;
+                break;
+            case INTAKE_UP:
+                //Rotate 90 degrees, then move on
+                intake.setFlowerRampUp();
+                step++;
+                break;
+            case END:
+                //Stay in this state until the end of auto, stop all motors
+                intake.stopIntake();
+                shooter.stopShooter();
+                shooter.stopFeeder();
+                drive.drive(0,0, false);
+                break;
         }
     }
 }

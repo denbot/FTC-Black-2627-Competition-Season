@@ -28,8 +28,16 @@ public class Intake implements BaseSubsystem {
 
     private void setIntakePower(double speed)  {
         intakeMotor.setPower(speed);
-        leftIntakeServo.setPower(speed);
-        rightIntakeServo.setPower(-speed);
+    }
+
+    public void setFlowerRampUp(){
+        leftIntakeServo.setPower(-0.4);
+        rightIntakeServo.setPower(0.4);
+    }
+
+    public void setFlowerRampDown(){
+        leftIntakeServo.setPower(0.55);
+        rightIntakeServo.setPower(-0.55);
     }
 
     public void spinIntakeForward(){
