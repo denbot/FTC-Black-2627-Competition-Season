@@ -97,7 +97,8 @@ public class Drive implements BaseSubsystem {
 
         //Same rule as linear driving, return true when we are within our tolerance, otherwise return false.
         return Math.abs(targetMm - leftDrive.getCurrentPosition()) <
-                (10 * Constants.Robot.ticksPerMM);
+                (Constants.Robot.ticksPerMM) && Math.abs(-targetMm - rightDrive.getCurrentPosition()) <
+                (Constants.Robot.ticksPerMM);
     }
 
     public void resetEncoders(){

@@ -5,45 +5,32 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.bot.den.black.AutoStates;
+import org.firstinspires.ftc.teamcode.bot.den.black.Constants;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Shooter;
 
-@Autonomous(name = "Auto1", group="Denbot", preselectTeleOp = "Teleop")
-public class Auto1 extends OpMode {
+@Autonomous(name = "AutoShootAndParkHiveUp", group="Denbot", preselectTeleOp = "Teleop")
+public class AutoShootAndParkHiveUp extends OpMode {
     //The ordered sequence of actions - This is what the robot will try to do
     private final AutoStates[] autoRoutine = {
             AutoStates.WAIT,
             AutoStates.RESET,
+            AutoStates.INTAKE_UP,
+            AutoStates.WAIT,
+            AutoStates.RESET,
             AutoStates.SHOOT,
-            AutoStates.DRIVE_TEN_FEET,
-            AutoStates.HOLD,
+            AutoStates.WAIT,
             AutoStates.RESET,
-            AutoStates.ROTATE_180,
-            AutoStates.INTAKE_DOWN,
-            AutoStates.HOLD,
-            AutoStates.RESET,
-            AutoStates.DRIVE_ONE_FOOT,
-            AutoStates.HOLD,
-            AutoStates.RESET,
-            AutoStates.DRIVE_NEGATIVE_ONE_FOOT,
+            AutoStates.DRIVE_EIGHT_FEET,
             AutoStates.HOLD,
             AutoStates.RESET,
             AutoStates.ROTATE_90,
             AutoStates.HOLD,
             AutoStates.RESET,
-            AutoStates.INTAKE_UP,
-            AutoStates.DRIVE_ONE_FOOT,
+            AutoStates.DRIVE_FIVE_FOOT,
             AutoStates.HOLD,
             AutoStates.RESET,
-            AutoStates.ROTATE_NEGATIVE_90,
-            AutoStates.HOLD,
-            AutoStates.RESET,
-            AutoStates.SHOOT,
-            AutoStates.ROTATE_NEGATIVE_100,
-            AutoStates.HOLD,
-            AutoStates.RESET,
-            AutoStates.DRIVE_FOUR_FEET,
             AutoStates.END
 
     };
@@ -108,7 +95,7 @@ public class Auto1 extends OpMode {
                 break;
             case SHOOT:
                 //Perform the shooting sequence for the specified amount of time, then move on
-                shooter.spinShooterHive();
+                shooter.spinShooterHive(Constants.Shooter.hiveSpeed-20);
                 if(shooter.shooterState == Shooter.ShooterState.AT_SPEED){
                     intake.spinIntakeForward();
                     shooter.spinFeederForward();
@@ -129,15 +116,15 @@ public class Auto1 extends OpMode {
                     step++;
                 }
                 break;
-            case DRIVE_FOUR_FEET:
+            case DRIVE_FIVE_FOOT:
                 //Drive forward 48 inches, then move on
-                if(drive.autoDrive(48,0.5)){
+                if(drive.autoDrive(60,0.5)){
                     step++;
                 }
                 break;
-            case DRIVE_TEN_FEET:
+            case DRIVE_EIGHT_FEET:
                 //Drive forward 120 inches, then move on
-                if(drive.autoDrive(120,0.5)){
+                if(drive.autoDrive(96,0.5)){
                     step++;
                 }
                 break;

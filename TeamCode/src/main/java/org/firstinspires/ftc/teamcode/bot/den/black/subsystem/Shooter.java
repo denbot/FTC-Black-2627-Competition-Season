@@ -54,11 +54,11 @@ public class Shooter implements BaseSubsystem {
         setpoint = speed;
     }
 
-    public void spinShooterHive(){
+    public void spinShooterHive(double speed){
 
-        setShooterVelocity(Constants.Shooter.hiveSpeed);
+        setShooterVelocity(speed);
         shooterState =
-                shooter.getVelocity() < Constants.Shooter.hiveSpeed - 10 ?
+                shooter.getVelocity() < speed - 10 ?
                         ShooterState.SPINNING_UP :
                         ShooterState. AT_SPEED;
     }

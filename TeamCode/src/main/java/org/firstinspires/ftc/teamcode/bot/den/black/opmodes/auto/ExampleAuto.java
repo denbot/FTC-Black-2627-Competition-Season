@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.bot.den.black.AutoStates;
+import org.firstinspires.ftc.teamcode.bot.den.black.Constants;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Shooter;
@@ -85,7 +86,7 @@ public class ExampleAuto extends OpMode {
                 break;
             case SHOOT:
                 //Perform the shooting sequence for the specified amount of time, then move on
-                shooter.spinShooterHive();
+                shooter.spinShooterHive(Constants.Shooter.hiveSpeed);
                 if(shooter.shooterState == Shooter.ShooterState.AT_SPEED){
                     intake.spinIntakeForward();
                     shooter.spinFeederForward();

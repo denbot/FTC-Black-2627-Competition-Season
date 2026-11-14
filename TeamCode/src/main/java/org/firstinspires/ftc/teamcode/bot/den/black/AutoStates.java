@@ -6,8 +6,9 @@ public enum AutoStates {
     HOLD,
     SHOOT,
     DRIVE_ONE_FOOT,
+    DRIVE_TWO_FEET,
     DRIVE_NEGATIVE_ONE_FOOT,
-    DRIVE_TEN_FEET,
+    DRIVE_EIGHT_FEET,
     DRIVE_FOUR_FEET,
     ROTATE_90,
     ROTATE_180,
@@ -15,5 +16,5 @@ public enum AutoStates {
     ROTATE_NEGATIVE_100,
     INTAKE_DOWN,
     INTAKE_UP,
-    END
+    DRIVE_FIVE_FOOT, DRIVE_THREE_FOOT, END
 }

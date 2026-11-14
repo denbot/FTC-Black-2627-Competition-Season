@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.bot.den.black.opmodes.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.bot.den.black.Constants;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Shooter;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Drive;
@@ -34,7 +35,7 @@ public class Teleop extends OpMode {
 
         if(gamepad2.circle){
             // prepare to shoot balls at hive
-            shooter.spinShooterHive();
+            shooter.spinShooterHive(Constants.Shooter.hiveSpeed);
         } else if(gamepad2.a){
             shooter.spinShooterReverse();
         } else {
