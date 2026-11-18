@@ -11,7 +11,7 @@ public class Constants {
     }
 
     public static class Shooter {
-        public static final double hiveSpeed = 1320;
+        public static final double hiveSpeed = 1310;
         public static final double flowerSpeed = 1000;
     }
 

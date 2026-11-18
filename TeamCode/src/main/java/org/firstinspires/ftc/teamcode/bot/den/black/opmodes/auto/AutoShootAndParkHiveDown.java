@@ -10,18 +10,24 @@ import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Shooter;
 
-@Autonomous(name = "ExampleAuto", group="Denbot", preselectTeleOp = "Teleop")
-public class ExampleAuto extends OpMode {
+@Autonomous(name = "AutoShootAndParkHiveDown", group="Denbot", preselectTeleOp = "Teleop")
+public class AutoShootAndParkHiveDown extends OpMode {
     //The ordered sequence of actions - This is what the robot will try to do
     private final AutoStates[] autoRoutine = {
             AutoStates.WAIT,
+            AutoStates.INTAKE_UP,
             AutoStates.RESET,
             AutoStates.SHOOT,
-            AutoStates.DRIVE_ONE_FOOT,
-            AutoStates.HOLD,
             AutoStates.RESET,
-            AutoStates.ROTATE_180,
+            AutoStates.DRIVE_TWO_FEET,
+            AutoStates.RESET,
             AutoStates.HOLD,
+            AutoStates.ROTATE_NEGATIVE_90,
+            AutoStates.RESET,
+            AutoStates.HOLD,
+            AutoStates.DRIVE_FIVE_FEET,
+            AutoStates.WAIT,
+            AutoStates.RESET,
             AutoStates.END
     };
     //This variable will step through the array above so we complete the steps in order
@@ -48,7 +54,7 @@ public class ExampleAuto extends OpMode {
 
         /*Press up on the d-pad to increase the wait time,
          *press down to decrease as long as the wait time is not negative.
-        */
+         */
         if(gamepad1.dpadUpWasReleased()){
             waitTime += 0.5;
         } else if(gamepad1.dpadDownWasReleased() && waitTime>0.0){
@@ -86,7 +92,7 @@ public class ExampleAuto extends OpMode {
                 break;
             case SHOOT:
                 //Perform the shooting sequence for the specified amount of time, then move on
-                shooter.spinShooterHive(Constants.Shooter.hiveSpeed);
+                shooter.spinShooterHive(Constants.Shooter.hiveSpeed-20);
                 if(shooter.shooterState == Shooter.ShooterState.AT_SPEED){
                     intake.spinIntakeForward();
                     shooter.spinFeederForward();
@@ -101,17 +107,29 @@ public class ExampleAuto extends OpMode {
                     shooter.stopShooter();
                 }
                 break;
-            case DRIVE_ONE_FOOT:
-                //Drive forward 12 inches, then move on
-                if(drive.autoDrive(12,0.5)){
+            case DRIVE_TWO_FEET:
+                //Drive forward 24 inches, then move on
+                if(drive.autoDrive(24,0.5)){
                     step++;
                 }
                 break;
-            case ROTATE_180:
-                //Rotate 180 degrees, then move on
-                if(drive.autoRotate(180,0.2)){
+            case DRIVE_FIVE_FEET:
+                //Drive forward 60 inches, then move on
+                if(drive.autoDrive(60,0.5)){
                     step++;
                 }
+                break;
+            case ROTATE_NEGATIVE_90:
+                //Rotate -90 degrees, then move on
+                if(drive.autoRotate(-90,0.2)){
+                    step++;
+                }
+                break;
+            case INTAKE_UP:
+                //Put the intake up, then move on
+                intake.setFlowerRampUp();
+                intake.stopIntake();
+                step++;
                 break;
             case END:
                 //Stay in this state until the end of auto, stop all motors

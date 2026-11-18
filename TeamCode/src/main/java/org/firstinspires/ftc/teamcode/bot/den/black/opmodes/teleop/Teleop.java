@@ -23,7 +23,7 @@ public class Teleop extends OpMode {
 
     @Override
     public void loop() {
-        if(gamepad2.a){
+        if(gamepad2.a || gamepad2.left_bumper){
             // intakes balls to prepare to shoot
             intake.spinIntakeForward()  ;
         } else if(gamepad2.triangle) {

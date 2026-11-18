@@ -15,22 +15,19 @@ public class AutoShootAndParkHiveUp extends OpMode {
     //The ordered sequence of actions - This is what the robot will try to do
     private final AutoStates[] autoRoutine = {
             AutoStates.WAIT,
-            AutoStates.RESET,
             AutoStates.INTAKE_UP,
-            AutoStates.WAIT,
             AutoStates.RESET,
             AutoStates.SHOOT,
-            AutoStates.WAIT,
             AutoStates.RESET,
             AutoStates.DRIVE_EIGHT_FEET,
-            AutoStates.HOLD,
             AutoStates.RESET,
+            AutoStates.HOLD,
             AutoStates.ROTATE_90,
-            AutoStates.HOLD,
             AutoStates.RESET,
-            AutoStates.DRIVE_FIVE_FOOT,
             AutoStates.HOLD,
+            AutoStates.DRIVE_FIVE_FEET,
             AutoStates.RESET,
+            AutoStates.HOLD,
             AutoStates.END
 
     };
@@ -110,14 +107,8 @@ public class AutoShootAndParkHiveUp extends OpMode {
                     shooter.stopShooter();
                 }
                 break;
-            case DRIVE_ONE_FOOT:
-                //Drive forward 12 inches, then move on
-                if(drive.autoDrive(12,0.5)){
-                    step++;
-                }
-                break;
-            case DRIVE_FIVE_FOOT:
-                //Drive forward 48 inches, then move on
+            case DRIVE_FIVE_FEET:
+                //Drive forward 60 inches, then move on
                 if(drive.autoDrive(60,0.5)){
                     step++;
                 }
@@ -128,44 +119,16 @@ public class AutoShootAndParkHiveUp extends OpMode {
                     step++;
                 }
                 break;
-            case DRIVE_NEGATIVE_ONE_FOOT:
-                //Drive forward -12 inches, then move on
-                if(drive.autoDrive(-12,0.5)){
-                    step++;
-                }
-                break;
-            case ROTATE_180:
-                //Rotate 180 degrees, then move on
-                if(drive.autoRotate(180,0.2)){
-                    step++;
-                }
-                break;
-            case ROTATE_NEGATIVE_100:
-                //Rotate 180 degrees, then move on
-                if(drive.autoRotate(-100,0.2)){
-                    step++;
-                }
-                break;
-            case ROTATE_NEGATIVE_90:
-                //Rotate 180 degrees, then move on
-                if(drive.autoRotate(-90,0.2)){
-                    step++;
-                }
-                break;
             case ROTATE_90:
                 //Rotate 90 degrees, then move on
                 if(drive.autoRotate(90,0.2)){
                     step++;
                 }
                 break;
-            case INTAKE_DOWN:
-                //Rotate 90 degrees, then move on
-                intake.setFlowerRampDown();
-                step++;
-                break;
             case INTAKE_UP:
                 //Rotate 90 degrees, then move on
                 intake.setFlowerRampUp();
+                intake.stopIntake();
                 step++;
                 break;
             case END:

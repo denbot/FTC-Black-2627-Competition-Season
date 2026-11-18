@@ -10,27 +10,18 @@ import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.bot.den.black.subsystem.Shooter;
 
-@Autonomous(name = "AutoHiveDownsprite", group="Denbot", preselectTeleOp = "Teleop")
-public class AutoHiveDownsprite extends OpMode {
+@Autonomous(name = "ShootAndLeave", group="Denbot", preselectTeleOp = "Teleop")
+public class AutoShootAndLeave extends OpMode {
     //The ordered sequence of actions - This is what the robot will try to do
     private final AutoStates[] autoRoutine = {
             AutoStates.WAIT,
             AutoStates.RESET,
-            AutoStates.INTAKE_UP,
-            AutoStates.WAIT,
-            AutoStates.RESET,
             AutoStates.SHOOT,
-            AutoStates.WAIT,
+            AutoStates.DRIVE_ONE_FOOT,
             AutoStates.RESET,
-            AutoStates.DRIVE_TWO_FEET,
             AutoStates.HOLD,
-            AutoStates.RESET,
-            AutoStates.ROTATE_NEGATIVE_90,
+            AutoStates.ROTATE_180,
             AutoStates.HOLD,
-            AutoStates.RESET,
-            AutoStates.DRIVE_FIVE_FOOT,
-            AutoStates.WAIT,
-            AutoStates.RESET,
             AutoStates.END
     };
     //This variable will step through the array above so we complete the steps in order
@@ -44,7 +35,7 @@ public class AutoHiveDownsprite extends OpMode {
 
     @Override
     public void init() {
-        telemetry.addData("Status", "Auto 1 Initialized");
+        telemetry.addData("Status", "Auto Shoot And Leave Initialized");
         intake.init(hardwareMap);
         shooter.init(hardwareMap);
         drive.init(hardwareMap);
@@ -57,7 +48,7 @@ public class AutoHiveDownsprite extends OpMode {
 
         /*Press up on the d-pad to increase the wait time,
          *press down to decrease as long as the wait time is not negative.
-         */
+        */
         if(gamepad1.dpadUpWasReleased()){
             waitTime += 0.5;
         } else if(gamepad1.dpadDownWasReleased() && waitTime>0.0){
@@ -95,7 +86,7 @@ public class AutoHiveDownsprite extends OpMode {
                 break;
             case SHOOT:
                 //Perform the shooting sequence for the specified amount of time, then move on
-                shooter.spinShooterHive(Constants.Shooter.hiveSpeed-20);
+                shooter.spinShooterHive(Constants.Shooter.hiveSpeed);
                 if(shooter.shooterState == Shooter.ShooterState.AT_SPEED){
                     intake.spinIntakeForward();
                     shooter.spinFeederForward();
@@ -116,28 +107,11 @@ public class AutoHiveDownsprite extends OpMode {
                     step++;
                 }
                 break;
-            case DRIVE_TWO_FEET:
-                //Drive forward 12 inches, then move on
-                if(drive.autoDrive(24,0.5)){
-                    step++;
-                }
-                break;
-            case DRIVE_FIVE_FOOT:
-                //Drive forward 12 inches, then move on
-                if(drive.autoDrive(60,0.5)){
-                    step++;
-                }
-                break;
-            case ROTATE_NEGATIVE_90:
+            case ROTATE_180:
                 //Rotate 180 degrees, then move on
-                if(drive.autoRotate(-90,0.2)){
+                if(drive.autoRotate(180,0.2)){
                     step++;
                 }
-                break;
-            case INTAKE_UP:
-                //Rotate 90 degrees, then move on
-                intake.setFlowerRampUp();
-                step++;
                 break;
             case END:
                 //Stay in this state until the end of auto, stop all motors

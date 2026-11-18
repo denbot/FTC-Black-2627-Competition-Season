@@ -31,13 +31,13 @@ public class Intake implements BaseSubsystem {
     }
 
     public void setFlowerRampUp(){
-        leftIntakeServo.setPower(-0.4);
-        rightIntakeServo.setPower(0.4);
+        leftIntakeServo.setPower(-0.0);
+        rightIntakeServo.setPower(0.0);
     }
 
     public void setFlowerRampDown(){
-        leftIntakeServo.setPower(0.55);
-        rightIntakeServo.setPower(-0.55);
+        leftIntakeServo.setPower(0.75);
+        rightIntakeServo.setPower(-0.75);
     }
 
     public void spinIntakeForward(){
