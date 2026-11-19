@@ -26,8 +26,8 @@ public class AutoShootAndParkHiveDown extends OpMode {
             AutoStates.RESET,
             AutoStates.HOLD,
             AutoStates.DRIVE_FIVE_FEET,
-            AutoStates.WAIT,
             AutoStates.RESET,
+            AutoStates.HOLD,
             AutoStates.END
     };
     //This variable will step through the array above so we complete the steps in order
@@ -51,7 +51,6 @@ public class AutoShootAndParkHiveDown extends OpMode {
     public void init_loop() {
         telemetry.addData("Wait Time", waitTime);
         waitTimer.reset();
-
         /*Press up on the d-pad to increase the wait time,
          *press down to decrease as long as the wait time is not negative.
          */
@@ -109,19 +108,19 @@ public class AutoShootAndParkHiveDown extends OpMode {
                 break;
             case DRIVE_TWO_FEET:
                 //Drive forward 24 inches, then move on
-                if(drive.autoDrive(24,0.5)){
+                if(drive.autoDrive(24)){
                     step++;
                 }
                 break;
             case DRIVE_FIVE_FEET:
                 //Drive forward 60 inches, then move on
-                if(drive.autoDrive(60,0.5)){
+                if(drive.autoDrive(60)){
                     step++;
                 }
                 break;
             case ROTATE_NEGATIVE_90:
                 //Rotate -90 degrees, then move on
-                if(drive.autoRotate(-90,0.2)){
+                if(drive.autoRotate(-90)){
                     step++;
                 }
                 break;

@@ -45,14 +45,14 @@ public class Drive implements BaseSubsystem {
         }
     }
 
-    public boolean autoDrive(double distance, double speed) {
+    public boolean autoDrive(double distance) {
         /* In this function we use a DistanceUnits. This is a class that allows us to accept different
          * input units depending on the user's preference (Inches, Millimeters, Feet, etc.).
          * The line below uses a "to" method to convert inches into millimeters.
          * Since goBilda provides the number of encoder ticks per millimeter of movement in our
          * constants file, we will convert to millimeters here.
          */
-        double targetPosition = (DistanceUnit.INCH.toMm(distance) * Constants.Robot.ticksPerMM);
+        double targetPosition = (DistanceUnit.INCH.toMm(distance) * Constants.Drive.ticksPerMM);
 
         leftDrive.setTargetPosition((int) targetPosition);
         rightDrive.setTargetPosition((int) targetPosition);
@@ -60,8 +60,8 @@ public class Drive implements BaseSubsystem {
         leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftDrive.setPower(speed);
-        rightDrive.setPower(speed);
+        leftDrive.setPower(Constants.Drive.driveSpeed);
+        rightDrive.setPower(Constants.Drive.driveSpeed);
 
         /* Here we check if we are within tolerance of our target position or not. We calculate the
          * absolute error (distance from our setpoint regardless of if it is positive or negative)
@@ -70,18 +70,18 @@ public class Drive implements BaseSubsystem {
          * Once we are within our tolerance, this function will return true and move on to the next step
          */
         return Math.abs(targetPosition - leftDrive.getCurrentPosition()) <
-                (10 * Constants.Robot.ticksPerMM);
+                (10 * Constants.Drive.ticksPerMM);
     }
 
-    public boolean autoRotate(double angle, double speed){
+    public boolean autoRotate(double angle){
         /* 360 degrees = 1 rotation = 2*pi Radians
          * Using radians helps simplify the math converting the circumference of our wheels to distance traveled.
          * To find the number of mm that our wheels need to travel, we just need to multiply the
          * requested angle in radians by the radius of our turning circle, or half the width of the robot.
          */
         double targetMm =   AngleUnit.DEGREES.toRadians(angle) *
-                            (Constants.Robot.trackWidthMM/2) *
-                            Constants.Robot.ticksPerMM;
+                            (Constants.Drive.trackWidthMM/2) *
+                            Constants.Drive.ticksPerMM;
         /*
          * We need to set the left motor to the inverse of the target so that we rotate instead
          * of driving straight.
@@ -92,13 +92,13 @@ public class Drive implements BaseSubsystem {
         leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftDrive.setPower(speed);
-        rightDrive.setPower(speed);
+        leftDrive.setPower(Constants.Drive.turnSpeed);
+        rightDrive.setPower(Constants.Drive.turnSpeed);
 
         //Same rule as linear driving, return true when we are within our tolerance, otherwise return false.
         return Math.abs(targetMm - leftDrive.getCurrentPosition()) <
-                (Constants.Robot.ticksPerMM) && Math.abs(-targetMm - rightDrive.getCurrentPosition()) <
-                (Constants.Robot.ticksPerMM);
+                (Constants.Drive.ticksPerMM) && Math.abs(-targetMm - rightDrive.getCurrentPosition()) <
+                (2*Constants.Drive.ticksPerMM);
     }
 
     public void resetEncoders(){

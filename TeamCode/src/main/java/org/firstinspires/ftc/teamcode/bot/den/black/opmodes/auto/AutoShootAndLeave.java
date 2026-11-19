@@ -103,13 +103,13 @@ public class AutoShootAndLeave extends OpMode {
                 break;
             case DRIVE_ONE_FOOT:
                 //Drive forward 12 inches, then move on
-                if(drive.autoDrive(12,0.5)){
+                if(drive.autoDrive(12)){
                     step++;
                 }
                 break;
             case ROTATE_180:
                 //Rotate 180 degrees, then move on
-                if(drive.autoRotate(180,0.2)){
+                if(drive.autoRotate(180)){
                     step++;
                 }
                 break;

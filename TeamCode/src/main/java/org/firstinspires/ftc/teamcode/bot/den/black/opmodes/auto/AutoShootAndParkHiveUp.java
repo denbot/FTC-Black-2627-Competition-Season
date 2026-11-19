@@ -109,19 +109,19 @@ public class AutoShootAndParkHiveUp extends OpMode {
                 break;
             case DRIVE_FIVE_FEET:
                 //Drive forward 60 inches, then move on
-                if(drive.autoDrive(60,0.5)){
+                if(drive.autoDrive(60)){
                     step++;
                 }
                 break;
             case DRIVE_EIGHT_FEET:
                 //Drive forward 120 inches, then move on
-                if(drive.autoDrive(96,0.5)){
+                if(drive.autoDrive(96)){
                     step++;
                 }
                 break;
             case ROTATE_90:
                 //Rotate 90 degrees, then move on
-                if(drive.autoRotate(90,0.2)){
+                if(drive.autoRotate(90)){
                     step++;
                 }
                 break;

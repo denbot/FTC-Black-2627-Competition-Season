@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.bot.den.black.Constants;
 
 public class Intake implements BaseSubsystem {
     private final Telemetry telemetry;
@@ -31,13 +32,13 @@ public class Intake implements BaseSubsystem {
     }
 
     public void setFlowerRampUp(){
-        leftIntakeServo.setPower(-0.0);
-        rightIntakeServo.setPower(0.0);
+        leftIntakeServo.setPower(Constants.Intake.rampUpPosition);
+        rightIntakeServo.setPower(Constants.Intake.rampUpPosition);
     }
 
     public void setFlowerRampDown(){
-        leftIntakeServo.setPower(0.75);
-        rightIntakeServo.setPower(-0.75);
+        leftIntakeServo.setPower(Constants.Intake.rampDownPosition);
+        rightIntakeServo.setPower(-Constants.Intake.rampDownPosition);
     }
 
     public void spinIntakeForward(){

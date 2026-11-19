@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.bot.den.black.Constants;
 
 public class Shooter implements BaseSubsystem {
 
@@ -32,7 +31,6 @@ public class Shooter implements BaseSubsystem {
         shooter = hardwareMap.get(DcMotorEx.class, org.firstinspires.ftc.teamcode.bot.den.black.Constants.Robot.ConfigNames.shooter);
         feeder = hardwareMap.get(CRServo.class, org.firstinspires.ftc.teamcode.bot.den.black.Constants.Robot.ConfigNames.feederServo);
 
-
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,
                 new PIDFCoefficients(
@@ -55,18 +53,9 @@ public class Shooter implements BaseSubsystem {
     }
 
     public void spinShooterHive(double speed){
-
         setShooterVelocity(speed);
         shooterState =
                 shooter.getVelocity() < speed - 10 ?
-                        ShooterState.SPINNING_UP :
-                        ShooterState. AT_SPEED;
-    }
-
-    public void spinShooterFlower(){
-        setShooterVelocity(Constants.Shooter.flowerSpeed);
-        shooterState =
-                shooter.getVelocity() < Constants.Shooter.flowerSpeed - 10 ?
                         ShooterState.SPINNING_UP :
                         ShooterState. AT_SPEED;
     }
